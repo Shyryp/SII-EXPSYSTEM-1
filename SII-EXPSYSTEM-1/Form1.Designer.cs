@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.загрузитьБазуЗнанийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.закрытьБазуЗнанийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -51,6 +51,22 @@
             this.menuStrip1.Size = new System.Drawing.Size(651, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // файлToolStripMenuItem
+            // 
+            this.файлToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.файлToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("файлToolStripMenuItem.Image")));
+            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+            this.файлToolStripMenuItem.ShowShortcutKeys = false;
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(37, 29);
+            this.файлToolStripMenuItem.Text = " ";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(47, 29);
+            this.toolStripMenuItem1.Text = " ";
             // 
             // menuStrip2
             // 
@@ -82,22 +98,6 @@
             this.закрытьБазуЗнанийToolStripMenuItem.Name = "закрытьБазуЗнанийToolStripMenuItem";
             this.закрытьБазуЗнанийToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.закрытьБазуЗнанийToolStripMenuItem.Text = "Закрыть базу знаний";
-            // 
-            // файлToolStripMenuItem
-            // 
-            this.файлToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.файлToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("файлToolStripMenuItem.Image")));
-            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.ShowShortcutKeys = false;
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(37, 29);
-            this.файлToolStripMenuItem.Text = " ";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(150, 29);
-            this.toolStripMenuItem1.Text = "toolStripMenuItem1";
             // 
             // Form1
             // 
