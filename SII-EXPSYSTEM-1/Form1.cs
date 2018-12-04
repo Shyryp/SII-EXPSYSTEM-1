@@ -14,8 +14,6 @@ namespace SII_EXPSYSTEM_1
 {
     public partial class Form1 : Form
     {
-        
-
         OpenFileDialog openFileDialogMKB = new OpenFileDialog();
         List<String> question = new List<String>();
         List<String> cars = new List<String>();
@@ -31,31 +29,31 @@ namespace SII_EXPSYSTEM_1
         public Form1()
         {
             InitializeComponent();
-            openFileDialogMKB.Filter = "Text files(*.mkb)|*.mkb|All files(*.*)|*.*";
+            openFileDialogMKB.Filter = "Text files(*.mkb)|*.mkb|All files(*.*)|*.*"; 
         }
 
-        private void enterButton_Click(object sender, EventArgs e)
+        private void enterButton_Click(object sender, EventArgs e) //нажатие по кнопке "ввод"
         {
-            var ci = new CultureInfo("en-US");
-            double presentValue = Convert.ToDouble(answerTextBox.Text, ci);
-            if (presentValue >= 0 && presentValue <= 1)
+            var ci = new CultureInfo("en-US"); //для правильного определения вещественных переменных в тексте
+            double presentValue = Convert.ToDouble(answerTextBox.Text, ci);//берём число из поля ввода, применяем параметры ci, и сохраняем как вещественное
+            if (presentValue >= 0 && presentValue <= 1) //проверяем, попадает ли число в диапазон
             {
-                if (presentValue > 0.5)
+                if (presentValue > 0.5) // если вероятность больше 0.5, то делаем первую версию алгоритма
                 {
                     yesAnswer(presentValue);
                 }
-                else if (presentValue < 0.5)
+                else if (presentValue < 0.5) // если вероятность меньше 0.5, то делаем вторую версию алгоритма
                 {
                     noAnswer(presentValue);
                 }
             }
             else { return; }
-            presentQuestion++;
-            updateWindow();
+            presentQuestion++; //переходим к следующему вопросу
+            updateWindow(); //обновляем информацию в окне
             
         }
 
-        private void sortingList()
+        private void sortingList() //сортируем лист по вероятностям
         {
             Dictionary<string, double> etre = new Dictionary<string, double>();
             for (int i = 0; i < countHypothesis; i++)
@@ -93,20 +91,31 @@ namespace SII_EXPSYSTEM_1
 
         private void yesAnswer(double answer)
         {
+            double Pp = 0;
+            double Pm = 0;
+            double Pap = 0;
             for (int i = 0; i < countHypothesis; i++)
             {
-                double PHE = (probabilitiesPlus[i][presentQuestion] * playApriorP[i]) /
-                (probabilitiesPlus[i][presentQuestion] * playApriorP[i] + probabilitiesMinus[i][presentQuestion] * (1 - playApriorP[i]));
-                playApriorP[i] = playApriorP[i] + ((answer - 0.5) * (PHE - playApriorP[i])) / (0.5);
+                Pp = probabilitiesPlus[i][presentQuestion];
+                Pm = probabilitiesMinus[i][presentQuestion];
+                Pap = playApriorP[i];
+
+                double PHE = (Pp * Pap) / (Pp * Pap + Pm * (1 - Pap));
+                playApriorP[i] = Pap + ((answer - 0.5) * (PHE - Pap)) / (0.5);
             }
         }
         private void noAnswer(double answer)
         {
+            double Pp = 0;
+            double Pm = 0;
+            double Pap = 0;
             for (int i = 0; i < countHypothesis; i++)
             {
-                double PHnE = ((1 - probabilitiesPlus[i][presentQuestion]) * playApriorP[i]) / 
-                    ((1 - probabilitiesPlus[i][presentQuestion]) * playApriorP[i] + (1 - probabilitiesMinus[i][presentQuestion]) * (1 - playApriorP[i]));
-                playApriorP[i] = PHnE + ((answer) * (playApriorP[i] - PHnE)) / (0.5);
+                Pp = probabilitiesPlus[i][presentQuestion];
+                Pm = probabilitiesMinus[i][presentQuestion];
+                Pap = playApriorP[i];
+                double PHnE = ((1 - Pp) * Pap) / ((1 - Pp) * Pap + (1 - Pm) * (1 - Pap));
+                playApriorP[i] = PHnE + ((answer) * (Pap - PHnE)) / (0.5);
             }
         }
         private void openFile_Click(object sender, EventArgs e)
