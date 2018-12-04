@@ -29,90 +29,172 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
-            this.файлToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.загрузитьБазуЗнанийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.закрытьБазуЗнанийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
-            this.menuStrip2.SuspendLayout();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.openFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.playThisKB = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeThisFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBox = new System.Windows.Forms.TextBox();
+            this.inputQuestionsList = new System.Windows.Forms.ListBox();
+            this.resultList = new System.Windows.Forms.ListBox();
+            this.listAnswers = new System.Windows.Forms.ListBox();
+            this.textBoxQuestion = new System.Windows.Forms.TextBox();
+            this.enterButton = new System.Windows.Forms.Button();
+            this.answerTextBox = new System.Windows.Forms.TextBox();
+            this.stopThisKB = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(25, 25);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem,
-            this.toolStripMenuItem1});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 24);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(651, 33);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip.ImageScalingSize = new System.Drawing.Size(25, 25);
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFile,
+            this.playThisKB,
+            this.stopThisKB,
+            this.closeThisFile});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(710, 33);
+            this.menuStrip.TabIndex = 0;
+            this.menuStrip.Text = "menuStrip1";
             // 
-            // файлToolStripMenuItem
+            // openFile
             // 
-            this.файлToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.файлToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("файлToolStripMenuItem.Image")));
-            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.ShowShortcutKeys = false;
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(37, 29);
-            this.файлToolStripMenuItem.Text = " ";
+            this.openFile.BackColor = System.Drawing.SystemColors.Menu;
+            this.openFile.Image = ((System.Drawing.Image)(resources.GetObject("openFile.Image")));
+            this.openFile.Name = "openFile";
+            this.openFile.Size = new System.Drawing.Size(167, 29);
+            this.openFile.Text = "Загрузить базу знаний";
+            this.openFile.Click += new System.EventHandler(this.openFile_Click);
             // 
-            // toolStripMenuItem1
+            // playThisKB
             // 
-            this.toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(47, 29);
-            this.toolStripMenuItem1.Text = " ";
+            this.playThisKB.AutoToolTip = true;
+            this.playThisKB.BackColor = System.Drawing.SystemColors.Menu;
+            this.playThisKB.Enabled = false;
+            this.playThisKB.Image = ((System.Drawing.Image)(resources.GetObject("playThisKB.Image")));
+            this.playThisKB.Name = "playThisKB";
+            this.playThisKB.ShowShortcutKeys = false;
+            this.playThisKB.Size = new System.Drawing.Size(120, 29);
+            this.playThisKB.Text = "Начать опрос";
+            this.playThisKB.ToolTipText = "Начать опрос";
+            this.playThisKB.Click += new System.EventHandler(this.playThisKB_Click);
             // 
-            // menuStrip2
+            // closeThisFile
             // 
-            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem1});
-            this.menuStrip2.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(651, 24);
-            this.menuStrip2.TabIndex = 1;
-            this.menuStrip2.Text = "menuStrip2";
+            this.closeThisFile.Enabled = false;
+            this.closeThisFile.Image = ((System.Drawing.Image)(resources.GetObject("closeThisFile.Image")));
+            this.closeThisFile.Name = "closeThisFile";
+            this.closeThisFile.Size = new System.Drawing.Size(159, 29);
+            this.closeThisFile.Text = "Закрыть базу знаний";
+            this.closeThisFile.Click += new System.EventHandler(this.closeThisFile_Click);
             // 
-            // файлToolStripMenuItem1
+            // textBox
             // 
-            this.файлToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.загрузитьБазуЗнанийToolStripMenuItem,
-            this.закрытьБазуЗнанийToolStripMenuItem});
-            this.файлToolStripMenuItem1.Name = "файлToolStripMenuItem1";
-            this.файлToolStripMenuItem1.Size = new System.Drawing.Size(48, 20);
-            this.файлToolStripMenuItem1.Text = "Файл";
+            this.textBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBox.Location = new System.Drawing.Point(0, 33);
+            this.textBox.Multiline = true;
+            this.textBox.Name = "textBox";
+            this.textBox.ReadOnly = true;
+            this.textBox.Size = new System.Drawing.Size(710, 62);
+            this.textBox.TabIndex = 1;
             // 
-            // загрузитьБазуЗнанийToolStripMenuItem
+            // inputQuestionsList
             // 
-            this.загрузитьБазуЗнанийToolStripMenuItem.Name = "загрузитьБазуЗнанийToolStripMenuItem";
-            this.загрузитьБазуЗнанийToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.загрузитьБазуЗнанийToolStripMenuItem.Text = "Загрузить базу знаний...";
+            this.inputQuestionsList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.inputQuestionsList.FormattingEnabled = true;
+            this.inputQuestionsList.HorizontalScrollbar = true;
+            this.inputQuestionsList.Location = new System.Drawing.Point(4, 100);
+            this.inputQuestionsList.Name = "inputQuestionsList";
+            this.inputQuestionsList.Size = new System.Drawing.Size(234, 290);
+            this.inputQuestionsList.TabIndex = 2;
             // 
-            // закрытьБазуЗнанийToolStripMenuItem
+            // resultList
             // 
-            this.закрытьБазуЗнанийToolStripMenuItem.Name = "закрытьБазуЗнанийToolStripMenuItem";
-            this.закрытьБазуЗнанийToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.закрытьБазуЗнанийToolStripMenuItem.Text = "Закрыть базу знаний";
+            this.resultList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.resultList.FormattingEnabled = true;
+            this.resultList.HorizontalScrollbar = true;
+            this.resultList.Location = new System.Drawing.Point(536, 100);
+            this.resultList.Name = "resultList";
+            this.resultList.Size = new System.Drawing.Size(170, 277);
+            this.resultList.TabIndex = 4;
+            // 
+            // listAnswers
+            // 
+            this.listAnswers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listAnswers.FormattingEnabled = true;
+            this.listAnswers.HorizontalScrollbar = true;
+            this.listAnswers.Location = new System.Drawing.Point(244, 100);
+            this.listAnswers.Name = "listAnswers";
+            this.listAnswers.Size = new System.Drawing.Size(286, 160);
+            this.listAnswers.TabIndex = 5;
+            // 
+            // textBoxQuestion
+            // 
+            this.textBoxQuestion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxQuestion.Location = new System.Drawing.Point(244, 266);
+            this.textBoxQuestion.Multiline = true;
+            this.textBoxQuestion.Name = "textBoxQuestion";
+            this.textBoxQuestion.ReadOnly = true;
+            this.textBoxQuestion.Size = new System.Drawing.Size(286, 72);
+            this.textBoxQuestion.TabIndex = 6;
+            // 
+            // enterButton
+            // 
+            this.enterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.enterButton.Enabled = false;
+            this.enterButton.Location = new System.Drawing.Point(434, 345);
+            this.enterButton.Name = "enterButton";
+            this.enterButton.Size = new System.Drawing.Size(96, 41);
+            this.enterButton.TabIndex = 9;
+            this.enterButton.Text = "Ввод";
+            this.enterButton.UseVisualStyleBackColor = true;
+            this.enterButton.Click += new System.EventHandler(this.enterButton_Click);
+            // 
+            // answerTextBox
+            // 
+            this.answerTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.answerTextBox.Enabled = false;
+            this.answerTextBox.Location = new System.Drawing.Point(255, 356);
+            this.answerTextBox.Name = "answerTextBox";
+            this.answerTextBox.Size = new System.Drawing.Size(64, 20);
+            this.answerTextBox.TabIndex = 10;
+            this.answerTextBox.Text = "0.5";
+            // 
+            // stopThisKB
+            // 
+            this.stopThisKB.Enabled = false;
+            this.stopThisKB.Image = ((System.Drawing.Image)(resources.GetObject("stopThisKB.Image")));
+            this.stopThisKB.Name = "stopThisKB";
+            this.stopThisKB.Size = new System.Drawing.Size(148, 29);
+            this.stopThisKB.Text = " Остановить опрос";
+            this.stopThisKB.Click += new System.EventHandler(this.stopThisKB_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(651, 371);
-            this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.menuStrip2);
-            this.MainMenuStrip = this.menuStrip1;
+            this.ClientSize = new System.Drawing.Size(710, 391);
+            this.Controls.Add(this.answerTextBox);
+            this.Controls.Add(this.enterButton);
+            this.Controls.Add(this.textBoxQuestion);
+            this.Controls.Add(this.listAnswers);
+            this.Controls.Add(this.resultList);
+            this.Controls.Add(this.inputQuestionsList);
+            this.Controls.Add(this.textBox);
+            this.Controls.Add(this.menuStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip;
+            this.MinimumSize = new System.Drawing.Size(650, 300);
             this.Name = "Form1";
-            this.Text = "Form1";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.menuStrip2.ResumeLayout(false);
-            this.menuStrip2.PerformLayout();
+            this.Text = "Экспертная система";
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,13 +202,18 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.MenuStrip menuStrip2;
-        private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem загрузитьБазуЗнанийToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem закрытьБазуЗнанийToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem playThisKB;
+        private System.Windows.Forms.ToolStripMenuItem openFile;
+        private System.Windows.Forms.ToolStripMenuItem closeThisFile;
+        private System.Windows.Forms.TextBox textBox;
+        private System.Windows.Forms.ListBox inputQuestionsList;
+        private System.Windows.Forms.ListBox resultList;
+        private System.Windows.Forms.ListBox listAnswers;
+        private System.Windows.Forms.TextBox textBoxQuestion;
+        private System.Windows.Forms.Button enterButton;
+        private System.Windows.Forms.TextBox answerTextBox;
+        private System.Windows.Forms.ToolStripMenuItem stopThisKB;
     }
 }
 
