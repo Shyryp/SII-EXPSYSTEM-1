@@ -53,7 +53,7 @@ namespace SII_EXPSYSTEM_1
             
         }
 
-        private void sortingList() //сортируем лист по вероятностям
+        private void sortingList() //сортируем лист гипотез по вероятностям
         {
             Dictionary<string, double> etre = new Dictionary<string, double>();
             for (int i = 0; i < countHypothesis; i++)
@@ -66,20 +66,21 @@ namespace SII_EXPSYSTEM_1
             }
 
         }
-        private void updateWindow()
+        private void updateWindow() //обновляем окно
         {
+            //очищаем всё в окне перед выводом новой инфы
             textBoxQuestion.Clear();
             listAnswers.Items.Clear();
             resultList.Items.Clear();
             inputQuestionsList.Items.Clear();
             int score = 1;
-            for (int i = presentQuestion+1; i < question.Count; i++)
+            for (int i = presentQuestion+1; i < question.Count; i++) // вывод оставшихся вопросов
             {
                 inputQuestionsList.Items.Add(score + ". " + question[i]);
                 score++;
             }
-            sortingList();
-            if (presentQuestion < countQuestions)
+            sortingList(); // сортируем гипотезы по вероятности
+            if (presentQuestion < countQuestions) //вывод следующего по счёту вопроса (если он предыдущий не был последним)
             {
                 textBoxQuestion.Text = question[presentQuestion];
             }
@@ -89,7 +90,22 @@ namespace SII_EXPSYSTEM_1
             }
         }
 
-        private void yesAnswer(double answer)
+        private void yesAnswer(double answer) // по алгоритму если ответили "да"
+        {
+            double Pp = 0;
+            double Pm = 0;
+            double Pap = 0;
+            for (int i = 0; i < countHypothesis; i++)
+            {
+                Pp = probabilitiesPlus[i][presentQuestion]; //P+
+                Pm = probabilitiesMinus[i][presentQuestion]; //P-
+                Pap = playApriorP[i]; //P априорное
+
+                double PHE = (Pp * Pap) / (Pp * Pap + Pm * (1 - Pap)); //формула P(H|E)
+                playApriorP[i] = Pap + ((answer - 0.5) * (PHE - Pap)) / (0.5);
+            }
+        }
+        private void noAnswer(double answer) //по алгоритму если ответили "нет"
         {
             double Pp = 0;
             double Pm = 0;
@@ -100,58 +116,44 @@ namespace SII_EXPSYSTEM_1
                 Pm = probabilitiesMinus[i][presentQuestion];
                 Pap = playApriorP[i];
 
-                double PHE = (Pp * Pap) / (Pp * Pap + Pm * (1 - Pap));
-                playApriorP[i] = Pap + ((answer - 0.5) * (PHE - Pap)) / (0.5);
+                double PHnE = ((1 - Pp) * Pap) / ((1 - Pp) * Pap + (1 - Pm) * (1 - Pap)); //формула P(H|!E)
+                playApriorP[i] = PHnE + ((answer) * (Pap - PHnE)) / (0.5); 
             }
         }
-        private void noAnswer(double answer)
-        {
-            double Pp = 0;
-            double Pm = 0;
-            double Pap = 0;
-            for (int i = 0; i < countHypothesis; i++)
-            {
-                Pp = probabilitiesPlus[i][presentQuestion];
-                Pm = probabilitiesMinus[i][presentQuestion];
-                Pap = playApriorP[i];
-                double PHnE = ((1 - Pp) * Pap) / ((1 - Pp) * Pap + (1 - Pm) * (1 - Pap));
-                playApriorP[i] = PHnE + ((answer) * (Pap - PHnE)) / (0.5);
-            }
-        }
-        private void openFile_Click(object sender, EventArgs e)
+        private void openFile_Click(object sender, EventArgs e) //открытие файла и разчленение полученной информации по векторам
         {
             if (openFileDialogMKB.ShowDialog() == DialogResult.Cancel)
                 return;
             string path = openFileDialogMKB.FileName;
             List<String> carsWithInfo = new List<String>();
-            using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
+            using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default)) //запуск потока чтения файла (не эффективно получилось, ну да ладно)
             {
-                string line;
-                textBox.Clear();
-                while ((line = sr.ReadLine()) != "")
+                string line; //переменная для записи очередной строки
+                textBox.Clear(); //очищаем текстбокс с вводной информацией базы знаний
+                while ((line = sr.ReadLine()) != "") //выносим вводную инфу в текстбокс до тех пор, пока не встретим пустую строку
                 {
                     textBox.AppendText(line + "\r\n");
                     Console.WriteLine(line);
                 }
-                if ((line = sr.ReadLine()) == "Вопросы:")
+                if ((line = sr.ReadLine()) == "Вопросы:") //если попадётся строка "Вопросы:" приступаем к работе с вопросами
                 {
                     Console.WriteLine(line);
-                    while ((line = sr.ReadLine()) != "")
+                    while ((line = sr.ReadLine()) != "") //заносим вопросы в массив вопросов
                     {
                         question.Add(line);
                     }
-                    while ((line = sr.ReadLine()) != null)
+                    while ((line = sr.ReadLine()) != null) //заносим гипотезы с данными в массив гипотез
                     {
                         carsWithInfo.Add(line);
                     }
                     foreach (string i in question)
                     {
-                        Console.WriteLine(i);
+                        Console.WriteLine(i); //пишем все вопросы в консоль для отладки
                     }
 
-                    for(int sc = 0; sc < carsWithInfo.Count; sc++)
+                    for(int sc = 0; sc < carsWithInfo.Count; sc++) //здесь парсим все данные для каждой гипотезы и вопроса, внося информацию в определённые массивы
                     {
-                        string[] words = carsWithInfo[sc].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] words = carsWithInfo[sc].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries); //разделяем на подстроки по запятой
                         int triger = 0;
                         
                         List<double> bufferListProbabilitiesPlus = new List<double>();
@@ -197,21 +199,21 @@ namespace SII_EXPSYSTEM_1
                         Console.WriteLine();
                     }
                     
-                    textBoxQuestion.Clear();
+                    textBoxQuestion.Clear(); //очищаем всё перед тем, как выводить на экран
                     listAnswers.Items.Clear();
                     resultList.Items.Clear();
                     inputQuestionsList.Items.Clear();
                     int score = 1;
-                    foreach (string text in question)
+                    foreach (string text in question) //выводим список вопросов в текстбокс вопросов
                     {
                         inputQuestionsList.Items.Add(score + ". "+text);
                         score++;
                     }
-                    for(int i = 0; i < cars.Count; i++)
+                    for(int i = 0; i < cars.Count; i++) //выводим список гипотез
                     {
                         resultList.Items.Add("(" + apriorP[i] + ") " +cars[i]);
                     }
-                    playThisKB.Enabled = true;
+                    playThisKB.Enabled = true; //включаем и выключаем необходимые кнопки
                     stopThisKB.Enabled = false;
                     closeThisFile.Enabled = true;
                 }
@@ -219,22 +221,22 @@ namespace SII_EXPSYSTEM_1
             }
         }
 
-        private void playThisKB_Click(object sender, EventArgs e)
+        private void playThisKB_Click(object sender, EventArgs e) //кнопка запуска выбранного файла
         {
             playApriorP = apriorP.GetRange(0, apriorP.Count);
-            textBoxQuestion.Clear();
+            textBoxQuestion.Clear(); //очищаем всё окно
             listAnswers.Items.Clear();
             resultList.Items.Clear();
             inputQuestionsList.Items.Clear();
             int score = 1;
-            for (int i = presentQuestion + 1; i < question.Count; i++)
+            for (int i = presentQuestion + 1; i < question.Count; i++) //вывод вопросов в текстбокс
             {
                 inputQuestionsList.Items.Add(score + ". " + question[i]);
                 score++;
             }
             for (int i = 0; i < cars.Count; i++)
             {
-                resultList.Items.Add("(" + apriorP[i] + ") " + cars[i]);
+                resultList.Items.Add("(" + apriorP[i] + ") " + cars[i]); //вывод гипотез с их вероятностью
             }
             answerTextBox.Enabled = true;
             enterButton.Enabled = true;
@@ -246,7 +248,7 @@ namespace SII_EXPSYSTEM_1
             countHypothesis = cars.Count();
         }
 
-        private void stopThisKB_Click(object sender, EventArgs e)
+        private void stopThisKB_Click(object sender, EventArgs e) //кнопка остановки 
         {
             playApriorP = apriorP.GetRange(0, apriorP.Count);
             textBoxQuestion.Clear();
@@ -269,7 +271,7 @@ namespace SII_EXPSYSTEM_1
             stopThisKB.Enabled = false;
         }
 
-        private void closeThisFile_Click(object sender, EventArgs e)
+        private void closeThisFile_Click(object sender, EventArgs e) //кнопка закрытия файла
         {
             question.Clear();
             cars.Clear();
